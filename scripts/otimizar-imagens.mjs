@@ -82,3 +82,27 @@ for (const f of [
   const m = await sharp(OUT + f).metadata()
   console.log(f.padEnd(42), m.width + 'x' + m.height)
 }
+
+/* Faixas de topo das páginas internas.
+   Recortes de regiões diferentes da mesma macro de bolhas: como o original tem
+   3355x2212, cada região tem bolhas de tamanho e densidade distintos e as três
+   faixas não parecem a mesma imagem repetida. Nenhuma arte nova envolvida. */
+const FAIXAS = [
+  { nome: 'faixa-bolhas-ampla', left: 0, top: 300, width: 2100, height: 651, blur: 0 },
+  { nome: 'faixa-bolhas-densa', left: 1255, top: 700, width: 2100, height: 651, blur: 0 },
+  { nome: 'faixa-bolhas-suave', left: 620, top: 1000, width: 2100, height: 651, blur: 8 },
+]
+
+for (const f of FAIXAS) {
+  const recorte = await sharp(ORIG + 'textura-bolhas-original.png')
+    .extract({ left: f.left, top: f.top, width: f.width, height: f.height })
+    .png()
+    .toBuffer()
+
+  let pipe = sharp(recorte).resize({ width: 2000 })
+  if (f.blur) pipe = pipe.blur(f.blur)
+  await pipe.webp({ quality: 74 }).toFile(OUT + f.nome + '.webp')
+
+  const m = await sharp(OUT + f.nome + '.webp').metadata()
+  console.log((f.nome + '.webp').padEnd(42), m.width + 'x' + m.height)
+}

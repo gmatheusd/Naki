@@ -4,23 +4,25 @@ import Image from 'next/image'
 import {
   ArrowRight,
   Droplets,
-  Leaf,
-  Recycle,
-  HandHeart,
+  Sparkles,
   ShieldCheck,
-  FlaskConical,
   Gauge,
   Store,
   UtensilsCrossed,
   Truck,
-  Sparkles,
+  FlaskConical,
 } from 'lucide-react'
 import { PRODUTOS } from '@/config/produtos'
 import { FAQ_GERAL } from '@/config/faq'
+import { SELOS_RESUMO } from '@/config/certificacoes'
+import { CANAIS } from '@/config/segmentos'
+import { PILARES, TECNOLOGIA } from '@/config/institucional'
 import { WA, EMPRESA } from '@/config/siteConfig'
 import { CtaSection } from '@/components/CtaSection'
 import { Revelar } from '@/components/Revelar'
-import { RevelarLink } from '@/components/RevelarLink'
+import { ProdutoCard } from '@/components/ProdutoCard'
+import { SelosGrid } from '@/components/SelosGrid'
+import { FaqAccordion } from '@/components/FaqAccordion'
 import { JsonLd } from '@/components/JsonLd'
 import { faqSchema, produtoSchema } from '@/config/schema'
 
@@ -28,103 +30,19 @@ export const metadata: Metadata = {
   alternates: { canonical: '/' },
 }
 
-/* Selos da linha. Fonte: PROD p.2–3 e INST p.3. */
-const SELOS = [
-  {
-    icon: ShieldCheck,
-    titulo: 'Certificação Kosher',
-    texto: 'Aprovado para comercialização em mercearias e mercados kosher.',
-  },
-  {
-    icon: Leaf,
-    titulo: 'Vegano',
-    texto: 'Sem ingredientes de origem animal e sem testes em animais.',
-  },
-  {
-    icon: Recycle,
-    titulo: 'Biodegradável',
-    texto: 'Formulação rapidamente biodegradável, de baixo impacto ambiental.',
-  },
-  {
-    icon: HandHeart,
-    titulo: 'Baixa irritabilidade',
-    texto: 'Livre de ácidos sulfônicos (LAS) e amidas, seguro para uso contínuo.',
-  },
-]
+/* Os textos vivem em src/config; aqui fica só o mapa de ícone por chave. */
+const ICONES_TECNOLOGIA = {
+  droplets: Droplets,
+  sparkles: Sparkles,
+  shield: ShieldCheck,
+  gauge: Gauge,
+} as const
 
-/* Tecnologia do produto. Fonte: PROD p.4. */
-const TECNOLOGIA = [
-  {
-    icon: Droplets,
-    titulo: 'Enxágue rápido',
-    texto:
-      'A espuma enxagua rapidamente sob a água. Reduz o tempo de torneira aberta e acelera o processo na pia, gerando redução direta de custos operacionais.',
-  },
-  {
-    icon: Sparkles,
-    titulo: 'Limpeza profunda',
-    texto:
-      'Atua com eficiência na remoção de gorduras e resíduos, inclusive em utensílios plásticos, reduzindo a necessidade de retrabalho.',
-  },
-  {
-    icon: ShieldCheck,
-    titulo: 'Segurança e sustentabilidade',
-    texto:
-      'Composição vegana e biodegradável, livre de tensoativos agressivos. Preserva a integridade dermatológica da equipe e o meio ambiente.',
-  },
-  {
-    icon: Gauge,
-    titulo: 'Alto rendimento',
-    texto:
-      'A alta viscosidade proporciona melhor controle na aplicação, reduzindo desperdícios e aumentando o rendimento durante o uso.',
-  },
-]
-
-/* Para quem a Nakí vende. Reflete o público real: varejo e mercearias. */
-const PARA_QUEM = [
-  {
-    icon: Store,
-    titulo: 'Mercados e mercearias',
-    texto:
-      'O frasco de 500 ml tem alto giro em gôndola e o apelo premium dos selos Vegano, Biodegradável e Kosher atende a um público exigente.',
-  },
-  {
-    icon: UtensilsCrossed,
-    titulo: 'Food service e cozinhas',
-    texto:
-      'O galão de 5 litros foi desenhado para operações que lavam em volume, com custo por lavagem menor e abastecimento de dispensers.',
-  },
-  {
-    icon: Truck,
-    titulo: 'Distribuidores',
-    texto:
-      'A super concentração entrega custo-benefício na ponta do lápis, com margens saudáveis e padronização rigorosa de lote a lote.',
-  },
-]
-
-/* Pilares institucionais. Fonte: INST p.3 e p.5. */
-const PILARES = [
-  {
-    titulo: 'Tecnologia de alta performance',
-    texto:
-      'Não acreditamos em limpeza baseada em esforço, mas em inteligência química. Desenvolvemos formulações que entregam eficiência superior, garantindo rendimento máximo.',
-  },
-  {
-    titulo: 'Sustentabilidade inteligente',
-    texto:
-      'Nossas soluções são rapidamente biodegradáveis, minimizando o impacto ambiental e alinhando nossa produção às mais rigorosas exigências do mercado atual.',
-  },
-  {
-    titulo: 'Essência vegana e ética',
-    texto:
-      'A excelência não precisa custar a natureza. Nossos produtos possuem selo vegano, refletindo nosso compromisso inegociável com a ética e o respeito aos animais.',
-  },
-  {
-    titulo: 'Cuidado integrado',
-    texto:
-      'Nossa química atua de forma poderosa contra a sujidade, mas é gentil onde importa. Priorizamos formulações com baixa irritabilidade dérmica e segurança total.',
-  },
-]
+const ICONES_CANAIS = {
+  store: Store,
+  utensils: UtensilsCrossed,
+  truck: Truck,
+} as const
 
 export default function Home() {
   return (
@@ -239,25 +157,9 @@ export default function Home() {
         {/* ─────────────────────── Selos ─────────────────────── */}
         <section className="border-b border-slate-100 bg-offwhite py-14">
           <div className="mx-auto max-w-7xl px-6">
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {SELOS.map((s, i) => (
-                <Revelar
-                  key={s.titulo}
-                  atraso={i * 80}
-                  className="flex items-start gap-4 rounded-2xl bg-white p-6 shadow-sm"
-                >
-                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-areia">
-                    <s.icon className="h-5 w-5 text-petroleo" aria-hidden />
-                  </span>
-                  <span>
-                    <span className="block font-bold text-petroleo">{s.titulo}</span>
-                    <span className="mt-1 block text-sm leading-relaxed text-slate-600">
-                      {s.texto}
-                    </span>
-                  </span>
-                </Revelar>
-              ))}
-            </div>
+            <Revelar>
+              <SelosGrid selos={SELOS_RESUMO} />
+            </Revelar>
           </div>
         </section>
 
@@ -280,52 +182,7 @@ export default function Home() {
 
             <div className="grid gap-8 md:grid-cols-2">
               {PRODUTOS.map((p, i) => (
-                <RevelarLink
-                  key={p.slug}
-                  href={`/produtos/${p.slug}/`}
-                  atraso={i * 110}
-                  className="group flex flex-col overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-sm transition-all hover:-translate-y-1 hover:border-menta hover:shadow-2xl"
-                >
-                  <div className="relative flex h-72 items-center justify-center bg-gradient-to-b from-offwhite to-menta/25 p-8">
-                    <Image
-                      src={p.imagem}
-                      alt={p.imagemAlt}
-                      width={p.largura}
-                      height={p.altura}
-                      sizes="(max-width: 768px) 60vw, 300px"
-                      className="h-full w-auto object-contain drop-shadow-xl transition-transform duration-700 group-hover:scale-105"
-                    />
-                    <span className="absolute top-5 right-5 rounded-full bg-petroleo px-4 py-1.5 text-xs font-bold text-white">
-                      {p.volume}
-                    </span>
-                  </div>
-
-                  <div className="flex flex-grow flex-col p-8">
-                    <h3 className="text-xl font-bold text-petroleo">{p.nome}</h3>
-                    <p className="mt-3 flex-grow text-sm leading-relaxed text-slate-600">
-                      {p.resumo}
-                    </p>
-
-                    <ul className="mt-5 flex flex-wrap gap-2">
-                      {p.selos.map((selo) => (
-                        <li
-                          key={selo}
-                          className="rounded-full bg-menta/25 px-3 py-1 text-xs font-semibold text-petroleo"
-                        >
-                          {selo}
-                        </li>
-                      ))}
-                    </ul>
-
-                    <span className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-petroleo">
-                      Ver detalhes do produto
-                      <ArrowRight
-                        className="h-4 w-4 transition-transform group-hover:translate-x-1"
-                        aria-hidden
-                      />
-                    </span>
-                  </div>
-                </RevelarLink>
+                <ProdutoCard key={p.slug} produto={p} atraso={i * 110} />
               ))}
             </div>
           </div>
@@ -348,19 +205,24 @@ export default function Home() {
             </Revelar>
 
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {TECNOLOGIA.map((t, i) => (
-                <Revelar
-                  key={t.titulo}
-                  atraso={i * 90}
-                  className="rounded-3xl border border-white/20 bg-white/10 p-7 backdrop-blur-sm transition-colors hover:bg-white/15"
-                >
-                  <span className="flex h-12 w-12 items-center justify-center rounded-full bg-areia">
-                    <t.icon className="h-6 w-6 text-petroleo" aria-hidden />
-                  </span>
-                  <h3 className="mt-5 text-lg font-bold text-white">{t.titulo}</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-white/80">{t.texto}</p>
-                </Revelar>
-              ))}
+              {TECNOLOGIA.map((t, i) => {
+                const Icone = ICONES_TECNOLOGIA[t.icone]
+                return (
+                  <Revelar
+                    key={t.titulo}
+                    atraso={i * 90}
+                    className="rounded-3xl border border-white/20 bg-white/10 p-7 backdrop-blur-sm transition-colors hover:bg-white/15"
+                  >
+                    <span className="flex h-12 w-12 items-center justify-center rounded-full bg-areia">
+                      <Icone className="h-6 w-6 text-petroleo" aria-hidden />
+                    </span>
+                    <h3 className="mt-5 text-lg font-bold text-white">{t.titulo}</h3>
+                    <p className="mt-3 text-sm leading-relaxed text-white/80">
+                      {t.texto}
+                    </p>
+                  </Revelar>
+                )
+              })}
             </div>
           </div>
         </section>
@@ -378,20 +240,38 @@ export default function Home() {
             </Revelar>
 
             <div className="grid gap-7 md:grid-cols-3">
-              {PARA_QUEM.map((p, i) => (
-                <Revelar
-                  key={p.titulo}
-                  atraso={i * 100}
-                  className="rounded-3xl border border-slate-100 bg-white p-8 shadow-sm transition-all hover:-translate-y-1 hover:border-menta hover:shadow-xl"
-                >
-                  <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-petroleo">
-                    <p.icon className="h-6 w-6 text-menta" aria-hidden />
-                  </span>
-                  <h3 className="mt-5 text-lg font-bold text-petroleo">{p.titulo}</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-slate-600">{p.texto}</p>
-                </Revelar>
-              ))}
+              {CANAIS.map((c, i) => {
+                const Icone = ICONES_CANAIS[c.icone]
+                return (
+                  <Revelar
+                    key={c.titulo}
+                    atraso={i * 100}
+                    className="rounded-3xl border border-slate-100 bg-white p-8 shadow-sm transition-all hover:-translate-y-1 hover:border-menta hover:shadow-xl"
+                  >
+                    <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-petroleo">
+                      <Icone className="h-6 w-6 text-menta" aria-hidden />
+                    </span>
+                    <h3 className="mt-5 text-lg font-bold text-petroleo">{c.titulo}</h3>
+                    <p className="mt-3 text-sm leading-relaxed text-slate-600">
+                      {c.texto}
+                    </p>
+                  </Revelar>
+                )
+              })}
             </div>
+
+            <Revelar atraso={200} className="mt-10 text-center">
+              <Link
+                href="/segmentos/"
+                className="group inline-flex items-center gap-2 font-bold text-petroleo"
+              >
+                Ver todos os segmentos de atuação
+                <ArrowRight
+                  className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                  aria-hidden
+                />
+              </Link>
+            </Revelar>
           </div>
         </section>
 
@@ -549,7 +429,10 @@ export default function Home() {
                     ['Aparência', 'Transparente / incolor'],
                     ['Validade', '24 meses'],
                     ['Livre de', 'LAS e amidas'],
-                    ['Composição', 'Tensoativo aniônico, espessante, conservante e veículo'],
+                    [
+                      'Composição',
+                      'Tensoativo aniônico, espessante, conservante e veículo',
+                    ],
                   ].map(([termo, valor]) => (
                     <div key={termo} className="bg-petroleo p-6">
                       <dt className="text-xs font-bold tracking-widest text-menta uppercase">
@@ -572,26 +455,9 @@ export default function Home() {
                 Perguntas frequentes
               </h2>
             </Revelar>
-            <div className="mt-10 space-y-3">
-              {FAQ_GERAL.slice(0, 5).map((f, i) => (
-                <Revelar
-                  key={f.q}
-                  as="details"
-                  atraso={i * 70}
-                  className="group rounded-2xl border border-slate-100 bg-white p-6 shadow-sm transition-all hover:border-menta hover:shadow-lg"
-                >
-                  <summary className="cursor-pointer list-none font-bold text-petroleo marker:content-none">
-                    <span className="flex items-start justify-between gap-4">
-                      {f.q}
-                      <span className="mt-1 shrink-0 text-menta transition-transform group-open:rotate-45">
-                        +
-                      </span>
-                    </span>
-                  </summary>
-                  <p className="mt-4 leading-relaxed text-slate-600">{f.a}</p>
-                </Revelar>
-              ))}
-            </div>
+            <Revelar atraso={80} className="mt-10">
+              <FaqAccordion faqs={FAQ_GERAL.slice(0, 5)} />
+            </Revelar>
             <div className="mt-8 text-center">
               <Link href="/perguntas-frequentes/" className="font-bold text-petroleo">
                 Ver todas as perguntas frequentes

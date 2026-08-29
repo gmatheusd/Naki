@@ -1,146 +1,110 @@
-# Nakí — Fotos e arquivos a providenciar
+# Nakí — o que ainda falta
 
-Levantamento feito em 28/08/2026, depois da home pronta.
-Todo caminho abaixo é relativo à raiz do projeto. **Basta salvar o arquivo com o nome exato
-indicado** que o código já aponta para ele (ou vai apontar quando a página for construída).
+Atualizado em 29/08/2026, com **o site inteiro já construído**.
 
-Formato preferido: **WebP** para foto e **SVG** para logo/selo. Se você só tiver JPG/PNG grande,
-salve em `assets-fonte/` e rode `node scripts/otimizar-imagens.mjs` — o script converte para
-`public/images/`. As medidas são o **mínimo**; maior é sempre melhor.
+O site está completo e navegável usando só o que existe hoje: dois packshots e uma macro de bolhas
+recuperados de dentro dos PDFs, mais o logotipo. **Nenhuma página tem buraco em forma de foto** e
+nenhuma tabela ficou vazia. Onde falta dado, a página leva a pessoa para o comercial, que é quem
+tem a informação.
+
+Este documento agora tem duas listas: o que **trava** publicação e o que **melhora** o site.
 
 ---
 
-## ✅ Já resolvido (extraído de dentro dos PDFs)
+## 🔴 Trava a publicação
 
-Não precisa providenciar nada disto agora. Só vale substituir se você tiver original melhor.
+### 1. Domínio e e-mail definitivos
+- **Onde muda:** uma constante em [`src/config/siteConfig.ts`](src/config/siteConfig.ts)
+- Hoje o site usa `https://naki.com.br` como placeholder e `comercial@naki.com.br` como e-mail.
+- Nos PDFs o e-mail aparece como `comercial@nakí.com`, **com acento no domínio** — quase certamente
+  erro de autocorreção, já que domínio acentuado praticamente não se usa.
+- Sem isso, o endereço canônico, o sitemap, o Open Graph e todo o JSON-LD apontam para um domínio
+  que talvez não seja o de vocês. É a única pendência que impede colocar no ar.
 
-| Arquivo em `public/images/` | O que é | Resolução atual |
+### 2. Revisão jurídica da Política de Privacidade
+- **Onde está:** [`/politica-de-privacidade/`](src/app/politica-de-privacidade/page.tsx)
+- Escrevi a política descrevendo **o comportamento real do site**: estático, sem banco de dados, o
+  formulário abre o WhatsApp em vez de gravar dados, e hoje sem cookie nenhum. Não é modelo genérico.
+- Ainda assim, é texto com efeito legal e precisa passar pelo contador ou advogado de vocês antes de
+  publicar.
+
+---
+
+## 🟡 Melhora bastante (o site funciona sem, mas rende mais com)
+
+### 3. Certificadora Kosher (hechsher)
+- **Onde entra:** [`/certificacoes/`](src/app/certificacoes/page.tsx) e a seção Kosher da home
+- A página já existe e trata a certificação como o **principal diferencial de venda**, porque é o que
+  abre a porta das mercearias judaicas. O texto afirma a certificação exatamente como o catálogo de
+  vocês afirma, mas **não nomeia rabinato nenhum**, porque nenhum material informa qual é.
+- Para esse público, saber qual é a certificadora costuma pesar mais que o preço. Com o nome e o
+  arquivo do selo, essa página fica bem mais forte.
+
+### 4. Selo Vegano oficial
+- Mesmo caso: hoje o site usa um ícone. Se o selo for de uma certificadora (SVB, Vegan Society), o
+  arquivo oficial dela vale mais que qualquer ícone desenhado.
+
+### 5. EAN-13 dos dois SKUs
+- **Onde entra:** campo `gtin13` do schema de produto, já preparado em
+  [`src/config/produtos.ts`](src/config/produtos.ts) (hoje `null`)
+- O EAN está impresso no rótulo do galão, mas o arquivo que extraí do PDF tem resolução baixa demais
+  para ler os dígitos com segurança, e chutar um código de barras seria pior que não ter.
+- Com ele, o Google consegue associar o produto às listagens de varejo.
+
+### 6. Dados logísticos: caixa master, peso, dimensões, paletização
+- **Onde entram:** [`src/config/produtos.ts`](src/config/produtos.ts), campos hoje em `null`
+- **Como o site trata isso hoje:** as páginas de produto e de distribuidor mostram um card
+  "Informações logísticas" explicando que o comercial envia conforme o volume, com botão de WhatsApp.
+  Vira caminho de conversa em vez de tabela vazia.
+- Quando os dados chegarem, é só preencher e a tabela aparece sozinha nas duas páginas de SKU.
+
+### 7. FISPQ e ficha técnica atualizada
+- **Como o site trata hoje:** conforme combinado, o PDF **não** fica para download. Os dados técnicos
+  estão em HTML nas páginas (que indexa melhor no Google que um PDF) e há botão de WhatsApp para
+  solicitar a documentação.
+- A ficha atual, quando for enviada a clientes, ainda merece: cobrir o galão de 5 L (ela só menciona
+  500 ml) e sair do português de Portugal — "humedecida", "contacto", "vómito", "equipa". No site,
+  esse texto já foi convertido para PT-BR.
+
+### 8. Endereço completo e redes sociais
+- Hoje o site diz só "São Paulo, SP", e não incluí mapa: apontar para o centro da cidade seria
+  informação falsa. Com o endereço, entra no schema e na página de contato.
+- Não há perfil de rede social em nenhum material, então o campo `sameAs` do JSON-LD ficou de fora.
+
+### 9. Google Analytics e Tag Manager
+- O código já está pronto e **desligado** enquanto `GA_ID` e `GTM_ID` estiverem vazios em
+  `siteConfig.ts`. Basta colar os IDs.
+
+---
+
+## 🟢 Fotos (opcionais, o site não depende delas)
+
+Você disse que não teria fotos melhores que as atuais, e o site foi construído assumindo isso. As
+faixas de topo de cada página são recortes de regiões diferentes da própria macro de bolhas da marca,
+o que dá imagem própria a cada página sem foto nova.
+
+Se em algum momento aparecer oportunidade, estas são as que mais mudariam o site, em ordem:
+
+| Foto | Onde entraria | Por quê |
 |---|---|---|
-| `naki-lava-loucas-neutro-500ml.webp` | Packshot do frasco, fundo transparente | 339×1194 |
-| `naki-lava-loucas-neutro-5-litros.webp` | Packshot do galão, fundo transparente | 740×1247 |
-| `textura-bolhas-naki.webp` | Macro de bolhas do hero | 2000×1319 |
-| `logo-naki-verde.png` / `logo-naki-branco.png` | Logotipo, fundo transparente | 1085×416 |
-| `og-naki.jpg` | Imagem de compartilhamento (WhatsApp, redes) | 1200×630 |
+| Produto em **mercearia kosher** | `/certificacoes/` e home | É a imagem que prova o argumento central do site para o público-alvo |
+| Produto na **gôndola** de mercado | `/segmentos/`, `/seja-um-distribuidor/` | Mostra o produto no ponto de venda real |
+| **Galão em cozinha profissional** | `/produtos/…-5-litros/`, `/segmentos/` | Sustenta o discurso de uso profissional contínuo |
+| **Caixa master e palete** | `/seja-um-distribuidor/` | Distribuidor decide compra olhando cubagem |
+| **Logotipo vetorial** (SVG/AI) | site inteiro | O atual foi reconstruído de um PDF; funciona no tamanho usado, mas não amplia |
+
+Salve em `assets-fonte/` e rode `node scripts/otimizar-imagens.mjs`, que o script converte e otimiza
+para `public/images/`.
 
 ---
 
-## 🔴 Prioridade 1 — trava a qualidade do que já está no ar
+## Decisões que ficaram registradas
 
-### 1. Logotipo vetorial
-- **Arquivo:** `assets-fonte/logo-naki.svg` (ou `.ai` / `.eps` / `.pdf` vetorial)
-- **Onde aparece:** cabeçalho, rodapé, favicon, imagem de compartilhamento — todas as páginas
-- **Por quê:** o logo atual foi **reconstruído** a partir de uma página de PDF, recortando o fundo
-  por cor. Funciona no tamanho em que está sendo usado, mas não é o arquivo original: as bordas
-  são aproximadas e não dá para ampliar. Com o vetor, o logo fica nítido em qualquer tamanho e o
-  favicon melhora.
-
-### 2. Packshots profissionais em alta
-- **Arquivos:** `assets-fonte/packshot-500ml-frente.png` · `assets-fonte/packshot-5l-frente.png`
-- **Medida:** mínimo 2000 px na maior dimensão, **fundo transparente ou branco puro**
-- **Onde aparece:** hero da home, cards de produto, páginas `/produtos/[slug]/`
-- **Por quê:** os atuais vieram de dentro da ficha técnica e têm 339 px e 740 px de largura.
-  Bastam para os cards, mas ficam no limite na página de produto, onde a imagem aparece maior.
-
-### 3. Rótulo legível, frente e verso, dos dois SKUs
-- **Arquivos:** `assets-fonte/rotulo-500ml-frente.jpg` · `assets-fonte/rotulo-500ml-verso.jpg`
-  · `assets-fonte/rotulo-5l-frente.jpg` · `assets-fonte/rotulo-5l-verso.jpg`
-- **Medida:** foto reta, bem iluminada, texto legível ao ampliar
-- **Onde aparece:** `/produtos/[slug]/`, bloco de composição e informações regulatórias
-- **Por quê:** no arquivo que temos, a letra miúda do rótulo (composição, SAC, EAN) está abaixo
-  do limite de leitura. É esse texto que precisa bater com o que o site publica.
-
-### 4. Selo Kosher oficial da certificadora
-- **Arquivo:** `public/images/selo-kosher.svg` (ou PNG com fundo transparente, mínimo 600 px)
-- **Onde aparece:** home (seção Kosher), `/certificacoes/`, páginas de produto
-- **Por quê:** a certificação Kosher é **o principal diferencial** para mercearias e mercados
-  judaicos, e esse público confere o selo antes de comprar. Hoje o site usa um ícone genérico.
-  Junto com o arquivo, preciso saber **qual é a certificadora (hechsher)** e a validade do
-  certificado — ver a lista de dados no fim deste documento.
-
-### 5. Selo Vegano oficial
-- **Arquivo:** `public/images/selo-vegano.svg`
-- **Onde aparece:** mesmos lugares do selo Kosher
-- **Por quê:** mesma razão. Se o selo for de uma certificadora específica (Sociedade Vegetariana
-  Brasileira, Vegan Society, etc.), o arquivo oficial dela dá muito mais credibilidade que um ícone.
-
----
-
-## 🟡 Prioridade 2 — necessárias para as próximas páginas
-
-### 6. Produto na gôndola do mercado
-- **Arquivo:** `public/images/naki-gondola-mercado.webp`
-- **Medida:** 1600×1067 (paisagem)
-- **Onde vai:** `/segmentos/` e `/seja-um-distribuidor/`
-- **O que mostrar:** os frascos de 500 ml enfileirados na prateleira de um mercado real, com o
-  rótulo legível. Vale foto de celular boa, com luz do próprio corredor.
-
-### 7. Produto em mercearia kosher
-- **Arquivo:** `public/images/naki-mercearia-kosher.webp`
-- **Medida:** 1600×1067
-- **Onde vai:** `/certificacoes/` e home (pode substituir o packshot da seção Kosher)
-- **O que mostrar:** o produto no ponto de venda que atende à comunidade judaica. É a foto que
-  mais comunica "este produto é aceito aqui" para o comprador desse canal. Se algum cliente atual
-  autorizar fotografar a loja, é a imagem de maior retorno da lista.
-
-### 8. Galão 5 L em cozinha profissional
-- **Arquivo:** `public/images/naki-cozinha-profissional.webp`
-- **Medida:** 1600×1067
-- **Onde vai:** `/segmentos/`, `/produtos/detergente-lava-loucas-neutro-5-litros/`
-- **O que mostrar:** o galão ao lado da pia industrial, de preferência em uso. Evitar rosto
-  identificável de funcionário sem autorização por escrito.
-
-### 9. Detalhe de lavagem: espuma e enxágue
-- **Arquivo:** `public/images/naki-lavagem-detalhe.webp`
-- **Medida:** 1600×1067
-- **Onde vai:** páginas de produto, bloco "Nossa tecnologia"
-- **O que mostrar:** close das mãos lavando um prato engordurado, com espuma abundante. É a prova
-  visual dos claims de espumação e enxágue rápido.
-
-### 10. Caixa master e palete
-- **Arquivo:** `public/images/naki-caixa-master.webp` · `public/images/naki-palete.webp`
-- **Medida:** 1200×900
-- **Onde vai:** `/seja-um-distribuidor/`, bloco de logística
-- **O que mostrar:** a caixa fechada com a arte, e um palete montado. Distribuidor decide compra
-  olhando cubagem; a foto ancora os números da tabela logística.
-
----
-
-## 🟢 Prioridade 3 — melhoram, mas não travam
-
-### 11. Bastidores: produção, envase ou laboratório
-- **Arquivo:** `public/images/naki-producao.webp` — 1600×1067
-- **Onde vai:** `/sobre/`, seção "A ciência por trás da eficiência"
-- **Por quê:** hoje esse bloco é só texto sobre fundo verde. Uma foto real de processo sustenta o
-  discurso de rigor técnico melhor que qualquer imagem de banco.
-
-### 12. Retrato da liderança
-- **Arquivo:** `public/images/naki-fundador.webp` — 1200×1200 (quadrada)
-- **Onde vai:** `/sobre/`, opcional
-- **Por quê:** marca de saneante vendendo para varejo ganha confiança com rosto e nome. Opcional.
-
----
-
-## 📋 Dados e documentos (não são fotos, mas travam páginas)
-
-| # | O que preciso | Trava o quê |
-|---|---|---|
-| 1 | **Domínio e e-mail definitivos** | `SITE_URL` e `CONTACT.email` estão com placeholder `naki.com.br`. Afeta canonical, sitemap, schema e compartilhamento. Nos PDFs o e-mail saiu como `comercial@nakí.com`, com acento — quase certamente erro. |
-| 2 | **Certificadora Kosher (hechsher) + validade** | Seção Kosher da home e página `/certificacoes/` inteira. |
-| 3 | **Certificadora do selo vegano** | `/certificacoes/` |
-| 4 | **EAN-13 dos dois SKUs** | Campo `gtin13` do schema de produto, que ajuda o Google a associar o item ao varejo. Está visível no rótulo do galão mas ilegível no arquivo que temos. |
-| 5 | **Caixa master, peso bruto, dimensões, paletização** | Página `/seja-um-distribuidor/` e ficha logística de cada produto. Hoje estão como `null` em `src/config/produtos.ts` de propósito: preencher com estimativa seria publicar dado falso num site de saneante. |
-| 6 | **Rendimento e diluição** (se houver) | Argumento de "alto rendimento" hoje é qualitativo. Um número torna a comparação com o detergente tradicional defensável. |
-| 7 | **Ficha técnica atualizada** cobrindo o galão 5 L, em PT-BR | A atual só menciona "frascos de 500 ml" e está redigida em português de Portugal ("humedecida", "contacto", "vómito", "equipa"). |
-| 8 | **FISPQ** | Download em `/produtos/` — comprador profissional e distribuidor pedem. |
-| 9 | **Metodologia dos testes** da página 2 da ficha (pratos lavados, placa, espuma) | Esses gráficos **não entraram no site**. O gráfico "Pratos Lavados" tem eixo cortado (começa em 2) e nenhuma fonte de ensaio. Publicar comparação com "detergentes tradicionais" sem laboratório, norma e data é risco de publicidade comparativa. Com o laudo, entra. |
-| 10 | **Endereço completo da empresa** | Schema `LocalBusiness` e página `/contato/`. Hoje só consta "São Paulo, SP". |
-| 11 | **Perfis de redes sociais** | `sameAs` do schema e rodapé. |
-| 12 | **IDs do Google Analytics e Tag Manager** | Medição. O código já está pronto e desligado enquanto `GA_ID`/`GTM_ID` estiverem vazios em `src/config/siteConfig.ts`. |
-
----
-
-## Como me entregar
-
-Joga tudo numa pasta e me avisa, ou salva direto em `assets-fonte/` com os nomes acima.
-Foto de celular bem iluminada resolve os itens 6 a 10 — não precisa de estúdio. O que realmente
-pede arquivo original são o **logo vetorial** e os **selos das certificadoras**.
+- **Ficha técnica em PDF não vai para download.** Os dados vivem em HTML e o arquivo sai por WhatsApp.
+- **Os testes comparativos da página 2 da ficha não entraram no site.** O gráfico "Pratos Lavados"
+  tem o eixo cortado em 2, o que amplia visualmente a diferença, e nenhum laboratório, norma ou data
+  é citado. Comparação direta com "detergentes tradicionais" nesse formato é exposição desnecessária.
+  Com o laudo em mãos, viram uma seção de provas de eficiência.
+- **Os 4 segmentos aparecem**, com os 3 não lançados marcados como "em desenvolvimento" e uma nota de
+  transparência dizendo que não estão disponíveis para compra.
+- **Sem mapa na página de contato**, porque só existe "São Paulo, SP".

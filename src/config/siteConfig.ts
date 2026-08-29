@@ -35,6 +35,9 @@ export const WA = {
   produto500: wa('Olá! Quero informações sobre o Nakí Lava Louças Neutro 500 ml.'),
   produto5l: wa('Olá! Quero informações sobre o Nakí Lava Louças Neutro galão 5 litros.'),
   fichaTecnica: wa('Olá! Gostaria de receber a ficha técnica e a FISPQ da linha Nakí.'),
+  logistica: wa('Olá! Preciso das informações logísticas da linha Nakí: caixa master, EAN e paletização.'),
+  contato: wa('Olá! Vim pelo site da Nakí e gostaria de falar com alguém do comercial.'),
+  segmentos: wa('Olá! Quero ser avisado quando novas linhas da Nakí forem lançadas.'),
   footer: wa('Olá! Vim pelo site da Nakí e gostaria de mais informações.'),
 } as const
 

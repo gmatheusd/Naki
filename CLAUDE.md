@@ -289,3 +289,48 @@ processados por `scripts/otimizar-imagens.mjs` para `public/images/`:
 `pdf-to-img`; para extrair objetos de imagem embutidos, `pdfjs-dist` + `pngjs`.
 O painel de preview do navegador **não repinta ao rolar** — para inspecionar seções, usar viewport
 alta e deslocar com `document.body.style.marginTop` negativo.
+
+---
+
+## 12. Site completo (29/08/2026)
+
+Todas as 12 rotas construídas e buildando estático. Restrição assumida: **sem fotos novas e sem os
+dados comerciais pendentes**. O peso visual vem de cor, tipografia e da macro de bolhas da marca.
+
+### Decisões de conteúdo fechadas com o cliente
+| Ponto | Decisão |
+|---|---|
+| Ficha técnica em PDF | **Não** vai para download. Dados em HTML + CTA de WhatsApp. |
+| Segmentos não lançados | Aparecem, marcados "em desenvolvimento" + nota de transparência. |
+| Testes comparativos `[FICHA p.2]` | **Fora do site** até haver metodologia e laboratório. |
+| Mapa em /contato/ | Não incluído: só existe "São Paulo, SP". |
+
+### Como cada lacuna de dado é tratada na interface
+Regra geral: **lacuna vira CTA para o comercial, nunca tabela vazia nem dado inventado.**
+- EAN, caixa master, peso, dimensões, paletização → card "Informações logísticas" com `WA.logistica`.
+  Campos seguem `null` em `produtos.ts`; ao preencher, a tabela passa a renderizar sozinha.
+- FISPQ e ficha em PDF → `WA.fichaTecnica`.
+- Certificadora Kosher → certificação afirmada como a marca afirma, **sem nomear rabinato**.
+- Endereço, redes sociais → `sameAs` e `streetAddress` ficam fora do JSON-LD.
+
+### Faixas de topo sem foto nova
+`PageHero` aceita `faixa: 'ampla' | 'densa' | 'suave'`. As três são recortes de regiões diferentes
+da mesma macro de 3355×2212 (`scripts/otimizar-imagens.mjs`), com densidades de bolha distintas, o
+que dá imagem própria a cada página sem parecer repetição.
+
+### Componentes
+`PageHero` · `ProdutoCard` · `SelosGrid` · `FichaTecnicaTabela` · `FaqAccordion` · `ContatoForm`
+(monta a mensagem e abre `wa.me`; o site é `output: 'export'` e não tem servidor para receber POST)
+· mais os herdados `Revelar`/`RevelarLink`, `JsonLd`, `Breadcrumbs`, `CtaSection`, `WhatsAppBubble`.
+
+### Config como fonte única
+`produtos.ts` · `institucional.ts` · `segmentos.ts` · `certificacoes.ts` · `faq.ts` · `siteConfig.ts`
+· `schema.ts`. Nenhum texto institucional vive dentro de página.
+
+### Verificação
+- `npx tsc --noEmit` e `npm run build` (12 rotas).
+- `node scripts/checar-links.mjs` — varre `out/` e confere todo href interno contra o arquivo real.
+  441 referências, zero quebradas. O Next não valida href em build, então isso só apareceria como
+  404 em produção.
+- Formulário testado ponta a ponta com `window.open` interceptado: monta a mensagem correta,
+  limpa os campos e mostra a confirmação.
