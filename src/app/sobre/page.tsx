@@ -10,7 +10,7 @@ import {
 } from '@/config/institucional'
 import { EMPRESA, WA } from '@/config/siteConfig'
 import { PageHero } from '@/components/PageHero'
-import { CtaSection } from '@/components/CtaSection'
+import { CtaForm } from '@/components/CtaForm'
 import { Revelar } from '@/components/Revelar'
 import { JsonLd } from '@/components/JsonLd'
 import { breadcrumbSchema, webPageSchema } from '@/config/schema'
@@ -262,9 +262,9 @@ export default function SobrePage() {
           </div>
         </section>
 
-        <CtaSection
-          title="Vamos conversar sobre a sua operação?"
-          description="Fale com o comercial para receber condições, tabela de preços e informações logísticas conforme o perfil do seu negócio."
+        <CtaForm
+          titulo="Vamos conversar sobre a sua operação?"
+          descricao="Conte o perfil do seu negócio e o comercial responde com tudo o que você precisa para começar."
           waLink={WA.hero}
         />
       </main>

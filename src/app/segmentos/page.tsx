@@ -14,7 +14,7 @@ import {
 import { SEGMENTOS, CANAIS } from '@/config/segmentos'
 import { WA } from '@/config/siteConfig'
 import { PageHero } from '@/components/PageHero'
-import { CtaSection } from '@/components/CtaSection'
+import { CtaForm } from '@/components/CtaForm'
 import { Revelar } from '@/components/Revelar'
 import { JsonLd } from '@/components/JsonLd'
 import { breadcrumbSchema, webPageSchema } from '@/config/schema'
@@ -197,9 +197,9 @@ export default function SegmentosPage() {
           </div>
         </section>
 
-        <CtaSection
-          title="Seu segmento está aqui?"
-          description="Fale com o comercial e receba as condições da linha disponível para o seu canal de venda."
+        <CtaForm
+          titulo="Seu segmento está aqui?"
+          descricao="Conte o perfil da sua operação e o comercial responde com as condições da linha disponível hoje."
           waLink={WA.hero}
         />
       </main>

@@ -2,71 +2,38 @@
 
 import { useState } from 'react'
 import { ArrowRight } from 'lucide-react'
-import { WA_NUMBER } from '@/config/siteConfig'
-
-type Status = 'idle' | 'enviado'
+import {
+  montarMensagem,
+  abrirWhatsApp,
+  PERFIS,
+  CAMPO,
+  type VarianteContato,
+} from '@/lib/whatsapp'
 
 type ContatoFormProps = {
   /** Muda o texto de abertura e o rótulo do botão. */
-  variante?: 'geral' | 'distribuidor'
+  variante?: VarianteContato
+  /** Rótulo do botão, quando o padrão da variante não serve. */
+  rotuloBotao?: string
 }
 
-const PERFIS = [
-  'Mercado ou supermercado',
-  'Mercearia',
-  'Restaurante ou food service',
-  'Distribuidor ou atacado',
-  'Indústria',
-  'Consumidor final',
-  'Outro',
-]
+const ROTULO = 'mb-2 block text-sm font-bold text-slate-700'
 
 /**
- * Monta a mensagem a partir dos campos e abre o WhatsApp com o texto pronto,
- * em vez de enviar para um serviço de formulário terceiro.
+ * Formulário completo, das páginas /contato/ e /seja-um-distribuidor/, onde a
+ * pessoa chegou decidida e responder mais campos não é atrito.
  *
- * O site é `output: 'export'`: não existe servidor para receber POST. E o
- * WhatsApp é o canal que a Nakí de fato atende, o único número divulgado em
- * todos os materiais, então mandar para lá é mais honesto que deixar a
- * mensagem parada numa caixa de entrada que ninguém confere.
+ * No fim das outras páginas quem aparece é o FormRapido, com três campos.
+ * A montagem da mensagem e a abertura do WhatsApp são compartilhadas pelos
+ * dois, em src/lib/whatsapp.ts.
  */
-function montarMensagem(dados: FormData, variante: 'geral' | 'distribuidor') {
-  const abertura =
-    variante === 'distribuidor'
-      ? `Olá! Meu nome é ${dados.get('nome')} e tenho interesse em distribuir a Nakí.`
-      : `Olá! Meu nome é ${dados.get('nome')} e vim pelo site da Nakí.`
-
-  const linhas = [
-    abertura,
-    dados.get('empresa') ? `Empresa: ${dados.get('empresa')}` : null,
-    dados.get('perfil') ? `Perfil: ${dados.get('perfil')}` : null,
-    dados.get('cidade') ? `Cidade: ${dados.get('cidade')}` : null,
-    `E-mail: ${dados.get('email')}`,
-    `WhatsApp: ${dados.get('telefone')}`,
-    dados.get('mensagem') ? `Mensagem: ${dados.get('mensagem')}` : null,
-  ].filter(Boolean)
-
-  return linhas.join('\n')
-}
-
-const campo =
-  'w-full rounded-lg border-b-2 border-slate-200 bg-offwhite px-4 py-3 text-slate-800 transition-colors outline-none focus:border-petroleo'
-const rotulo = 'mb-2 block text-sm font-bold text-slate-700'
-
-export function ContatoForm({ variante = 'geral' }: ContatoFormProps) {
-  const [status, setStatus] = useState<Status>('idle')
+export function ContatoForm({ variante = 'geral', rotuloBotao }: ContatoFormProps) {
+  const [status, setStatus] = useState<'idle' | 'enviado'>('idle')
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     const form = e.currentTarget
-    const texto = montarMensagem(new FormData(form), variante)
-
-    window.open(
-      `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(texto)}`,
-      '_blank',
-      'noopener,noreferrer',
-    )
-
+    abrirWhatsApp(montarMensagem(new FormData(form), variante))
     form.reset()
     setStatus('enviado')
   }
@@ -74,7 +41,7 @@ export function ContatoForm({ variante = 'geral' }: ContatoFormProps) {
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
       <div>
-        <label htmlFor="nome" className={rotulo}>
+        <label htmlFor="nome" className={ROTULO}>
           Seu nome
         </label>
         <input
@@ -84,12 +51,12 @@ export function ContatoForm({ variante = 'geral' }: ContatoFormProps) {
           required
           autoComplete="name"
           placeholder="Nome completo"
-          className={campo}
+          className={CAMPO}
         />
       </div>
 
       <div>
-        <label htmlFor="empresa" className={rotulo}>
+        <label htmlFor="empresa" className={ROTULO}>
           Empresa
         </label>
         <input
@@ -98,15 +65,15 @@ export function ContatoForm({ variante = 'geral' }: ContatoFormProps) {
           type="text"
           autoComplete="organization"
           placeholder="Nome do estabelecimento"
-          className={campo}
+          className={CAMPO}
         />
       </div>
 
       <div>
-        <label htmlFor="perfil" className={rotulo}>
+        <label htmlFor="perfil" className={ROTULO}>
           Perfil do negócio
         </label>
-        <select id="perfil" name="perfil" defaultValue="" className={campo}>
+        <select id="perfil" name="perfil" defaultValue="" className={CAMPO}>
           <option value="">Selecione uma opção</option>
           {PERFIS.map((p) => (
             <option key={p} value={p}>
@@ -118,7 +85,7 @@ export function ContatoForm({ variante = 'geral' }: ContatoFormProps) {
 
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
-          <label htmlFor="email" className={rotulo}>
+          <label htmlFor="email" className={ROTULO}>
             E-mail
           </label>
           <input
@@ -128,11 +95,11 @@ export function ContatoForm({ variante = 'geral' }: ContatoFormProps) {
             required
             autoComplete="email"
             placeholder="voce@empresa.com.br"
-            className={campo}
+            className={CAMPO}
           />
         </div>
         <div>
-          <label htmlFor="telefone" className={rotulo}>
+          <label htmlFor="telefone" className={ROTULO}>
             WhatsApp
           </label>
           <input
@@ -142,13 +109,13 @@ export function ContatoForm({ variante = 'geral' }: ContatoFormProps) {
             required
             autoComplete="tel"
             placeholder="(11) 90000-0000"
-            className={campo}
+            className={CAMPO}
           />
         </div>
       </div>
 
       <div>
-        <label htmlFor="cidade" className={rotulo}>
+        <label htmlFor="cidade" className={ROTULO}>
           Cidade e estado
         </label>
         <input
@@ -156,12 +123,12 @@ export function ContatoForm({ variante = 'geral' }: ContatoFormProps) {
           name="cidade"
           type="text"
           placeholder="São Paulo, SP"
-          className={campo}
+          className={CAMPO}
         />
       </div>
 
       <div>
-        <label htmlFor="mensagem" className={rotulo}>
+        <label htmlFor="mensagem" className={ROTULO}>
           {variante === 'distribuidor'
             ? 'Conte sobre a sua operação'
             : 'Como podemos ajudar?'}
@@ -175,7 +142,7 @@ export function ContatoForm({ variante = 'geral' }: ContatoFormProps) {
               ? 'Região atendida, volume estimado e canais em que você já trabalha.'
               : 'Escreva a sua dúvida ou o que você precisa.'
           }
-          className={`${campo} resize-y`}
+          className={`${CAMPO} resize-y`}
         />
       </div>
 
@@ -183,7 +150,8 @@ export function ContatoForm({ variante = 'geral' }: ContatoFormProps) {
         type="submit"
         className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl bg-petroleo py-4 font-bold text-white shadow-lg transition-all hover:bg-petroleo-escuro"
       >
-        {variante === 'distribuidor' ? 'Quero ser distribuidor' : 'Enviar mensagem'}
+        {rotuloBotao ??
+          (variante === 'distribuidor' ? 'Quero ser distribuidor' : 'Enviar mensagem')}
         <ArrowRight className="h-5 w-5" aria-hidden />
       </button>
 

@@ -18,7 +18,7 @@ import { SELOS_RESUMO } from '@/config/certificacoes'
 import { CANAIS } from '@/config/segmentos'
 import { PILARES, TECNOLOGIA } from '@/config/institucional'
 import { WA, EMPRESA } from '@/config/siteConfig'
-import { CtaSection } from '@/components/CtaSection'
+import { CtaForm } from '@/components/CtaForm'
 import { Revelar } from '@/components/Revelar'
 import { ProdutoCard } from '@/components/ProdutoCard'
 import { SelosGrid } from '@/components/SelosGrid'
@@ -466,9 +466,9 @@ export default function Home() {
           </div>
         </section>
 
-        <CtaSection
-          title="Leve a Nakí para a sua operação"
-          description="Fale com o comercial para receber condições, tabela de preços e informações logísticas conforme o perfil do seu negócio."
+        <CtaForm
+          titulo="Leve a Nakí para a sua operação"
+          descricao="Conte o perfil do seu negócio e o comercial responde com tudo o que você precisa para começar."
           waLink={WA.hero}
         />
       </main>

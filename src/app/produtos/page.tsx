@@ -7,7 +7,7 @@ import { PageHero } from '@/components/PageHero'
 import { ProdutoCard } from '@/components/ProdutoCard'
 import { SelosGrid } from '@/components/SelosGrid'
 import { FichaTecnicaTabela } from '@/components/FichaTecnicaTabela'
-import { CtaSection } from '@/components/CtaSection'
+import { CtaForm } from '@/components/CtaForm'
 import { Revelar } from '@/components/Revelar'
 import { JsonLd } from '@/components/JsonLd'
 import { breadcrumbSchema, webPageSchema } from '@/config/schema'
@@ -171,10 +171,12 @@ export default function ProdutosPage() {
           </div>
         </section>
 
-        <CtaSection
-          title="Precisa de volume maior?"
-          description="Se você distribui ou atende várias unidades, temos condições específicas para operações de escala."
+        <CtaForm
+          etiqueta="Condições comerciais"
+          titulo="Precisa de volume maior?"
+          descricao="Se você distribui ou atende várias unidades, há condições específicas para operações de escala."
           waLink={WA.distribuidor}
+          variante="distribuidor"
         />
       </main>
     </>

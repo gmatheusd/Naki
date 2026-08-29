@@ -15,7 +15,7 @@ import { FAQ_GERAL } from '@/config/faq'
 import { WA } from '@/config/siteConfig'
 import { PageHero } from '@/components/PageHero'
 import { FaqAccordion } from '@/components/FaqAccordion'
-import { CtaSection } from '@/components/CtaSection'
+import { CtaForm } from '@/components/CtaForm'
 import { Revelar } from '@/components/Revelar'
 import { JsonLd } from '@/components/JsonLd'
 import { breadcrumbSchema, webPageSchema, faqSchema } from '@/config/schema'
@@ -231,10 +231,16 @@ export default function CertificacoesPage() {
           </section>
         )}
 
-        <CtaSection
-          title="Sua loja atende o público kosher?"
-          description="Fale com o comercial e receba as condições para levar a linha Nakí ao seu ponto de venda."
+        <CtaForm
+          etiqueta="Varejo kosher"
+          titulo="Sua loja atende o público kosher?"
+          descricao="Fale com o comercial e receba as condições para levar a linha Nakí ao seu ponto de venda."
           waLink={WA.kosher}
+          bullets={[
+            'Condições para mercearias e mercados kosher',
+            'Tabela de preços e caixa master',
+            'Documentação das certificações da linha',
+          ]}
         />
       </main>
     </>

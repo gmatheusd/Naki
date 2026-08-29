@@ -17,7 +17,7 @@ import { PageHero } from '@/components/PageHero'
 import { ProdutoCard } from '@/components/ProdutoCard'
 import { FichaTecnicaTabela } from '@/components/FichaTecnicaTabela'
 import { FaqAccordion } from '@/components/FaqAccordion'
-import { CtaSection } from '@/components/CtaSection'
+import { CtaForm } from '@/components/CtaForm'
 import { Revelar } from '@/components/Revelar'
 import { JsonLd } from '@/components/JsonLd'
 import { breadcrumbSchema, produtoSchema, faqSchema } from '@/config/schema'
@@ -303,9 +303,9 @@ export default async function ProdutoPage({ params }: Props) {
           </section>
         )}
 
-        <CtaSection
-          title="Leve este produto para a sua operação"
-          description="Fale com o comercial para receber condições, tabela de preços e informações logísticas conforme o perfil do seu negócio."
+        <CtaForm
+          titulo={`Peça condições do ${produto.apresentacao.toLowerCase()}`}
+          descricao="Conte o perfil do seu negócio e o comercial responde com preço, logística e documentação deste produto."
           waLink={WA[produto.waLink]}
         />
       </main>

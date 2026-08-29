@@ -334,3 +334,31 @@ que dá imagem própria a cada página sem parecer repetição.
   404 em produção.
 - Formulário testado ponta a ponta com `window.open` interceptado: monta a mensagem correta,
   limpa os campos e mostra a confirmação.
+
+### CTA de fim de página (revisto duas vezes em 29/08/2026)
+
+**Problema 1, cor.** O `CtaSection` original era uma faixa verde em degradê logo acima do rodapé,
+também verde: os dois blocos escuros colados não se separavam e o fim da página virava uma mancha só.
+
+**Problema 2, peso.** A primeira substituição colocou o formulário completo num cartão ao lado do
+texto, em duas colunas. Ficou alto e lento para um fim de página, onde a pessoa está de saída.
+
+**Solução atual — `CtaForm`:** fundo claro (`bg-offwhite` com halos de menta e areia), texto
+centralizado no topo (etiqueta, título, descrição, três bullets em linha) e captação numa linha só
+logo abaixo. Fecha com "Prefere falar agora?" apontando para WhatsApp e telefone. Cerca de 540 px de
+altura no desktop, contra mais de 900 na versão em duas colunas.
+
+**`FormRapido`** pede **nome, empresa e perfil**. Não pergunta telefone de propósito: a mensagem
+chega pelo próprio WhatsApp, então o número já vem junto, e o espaço rende muito mais sabendo qual
+mercado ou mercearia está perguntando. Só o nome é obrigatório. Rótulos ficam em `sr-only` (o placeholder carrega a informação) para a linha
+não crescer. Usa `CAMPO_CLARO`, com fundo branco e borda inteira: o `CAMPO` padrão tem fundo
+`offwhite` e sumiria contra o fundo da seção.
+
+**`ContatoForm`** continua com o formulário completo em `/contato/` e `/seja-um-distribuidor/`, onde
+a pessoa chegou decidida e responder mais campos não é atrito.
+
+**`src/lib/whatsapp.ts`** concentra o que os dois compartilham: `montarMensagem` (campo vazio some
+da mensagem em vez de virar linha pendurada), `abrirWhatsApp` e as classes de campo. `PERFIS` vive em
+`siteConfig.ts`.
+
+`CtaForm` é usado nas 7 páginas que antes tinham `CtaSection`, que foi removido do projeto.

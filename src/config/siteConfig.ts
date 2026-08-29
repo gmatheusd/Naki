@@ -41,6 +41,17 @@ export const WA = {
   footer: wa('Olá! Vim pelo site da Nakí e gostaria de mais informações.'),
 } as const
 
+/** Opções do campo "perfil do negócio", compartilhadas pelos formulários. */
+export const PERFIS = [
+  'Mercado ou supermercado',
+  'Mercearia',
+  'Restaurante ou food service',
+  'Distribuidor ou atacado',
+  'Indústria',
+  'Consumidor final',
+  'Outro',
+] as const
+
 export const CONTACT = {
   phone: '(11) 99432-1975',
   phoneHref: 'tel:+5511994321975',

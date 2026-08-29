@@ -5,7 +5,7 @@ import { FAQ_GERAL } from '@/config/faq'
 import { WA } from '@/config/siteConfig'
 import { PageHero } from '@/components/PageHero'
 import { FaqAccordion } from '@/components/FaqAccordion'
-import { CtaSection } from '@/components/CtaSection'
+import { CtaForm } from '@/components/CtaForm'
 import { Revelar } from '@/components/Revelar'
 import { JsonLd } from '@/components/JsonLd'
 import { breadcrumbSchema, webPageSchema, faqSchema } from '@/config/schema'
@@ -88,10 +88,17 @@ export default function FaqPage() {
           </div>
         </section>
 
-        <CtaSection
-          title="Ficou alguma dúvida?"
-          description="Chame o comercial no WhatsApp. Respondemos sobre produto, certificação, condições e logística."
+        <CtaForm
+          etiqueta="Ainda com dúvida?"
+          titulo="Pergunte direto ao comercial"
+          descricao="Respondemos sobre produto, certificação, condições comerciais e logística."
           waLink={WA.contato}
+          bullets={[
+            'Resposta de quem conhece a formulação',
+            'Condições conforme o seu canal de venda',
+            'Ficha técnica e FISPQ quando precisar',
+          ]}
+          rotuloBotao="Enviar pergunta"
         />
       </main>
     </>
