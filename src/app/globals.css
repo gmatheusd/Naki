@@ -1,0 +1,132 @@
+@import 'tailwindcss';
+
+@theme {
+  /*
+   * Paleta amostrada por frequência de pixel nas páginas dos PDFs da marca,
+   * ver CLAUDE.md seção 8. Os nomes são os da marca, não "primary/secondary",
+   * para que o código continue legível ao lado do material impresso.
+   */
+  --color-petroleo: #206870;
+  --color-petroleo-escuro: #17505a;
+  --color-menta: #88d8b8;
+  --color-menta-clara: #b0e0c8;
+  --color-agua: #a0d0c0;
+  --color-areia: #f0e8b0;
+  --color-areia-escura: #e8dc98;
+  --color-offwhite: #f8f8f8;
+
+  /*
+   * Exo 2 é a única família usada nos três PDFs (fontes embutidas conferidas),
+   * então não há decisão de tipografia a tomar aqui: é a fonte da marca.
+   */
+  --font-titulo: var(--font-exo2), system-ui, sans-serif;
+  --font-corpo: var(--font-exo2), system-ui, sans-serif;
+
+  --ease-suave: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-macia: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* O padrão do Tailwind, 150ms, é seco demais para hover de card e cor. */
+  --default-transition-duration: 400ms;
+  --default-transition-timing-function: var(--ease-suave);
+
+  --animate-flutuar: flutuar 7s ease-in-out infinite;
+  --animate-flutuar-lento: flutuar 11s ease-in-out infinite;
+  --animate-pulsar-lento: pulsar-lento 4.5s ease-in-out infinite;
+  --animate-surgir: surgir 0.9s var(--ease-suave) both;
+  --animate-subir-bolha: subir-bolha 14s linear infinite;
+}
+
+@keyframes flutuar {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+
+@keyframes pulsar-lento {
+  0%, 100% { opacity: 0.45; transform: scale(1); }
+  50%      { opacity: 0.8; transform: scale(1.04); }
+}
+
+@keyframes surgir {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* Bolhas subindo no hero, eco da macrofotografia das capas dos PDFs. */
+@keyframes subir-bolha {
+  0%   { transform: translateY(0) scale(0.85); opacity: 0; }
+  10%  { opacity: 0.5; }
+  85%  { opacity: 0.25; }
+  100% { transform: translateY(-110vh) scale(1.15); opacity: 0; }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply m-0 min-h-svh bg-white text-slate-700 antialiased;
+    font-family: var(--font-corpo);
+  }
+
+  /* Os títulos dos PDFs são Exo 2 Black em caixa alta. */
+  h1, h2, h3, h4 {
+    font-family: var(--font-titulo);
+    font-weight: 900;
+  }
+
+  ::selection {
+    @apply bg-petroleo text-white;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-petroleo;
+  }
+}
+
+@layer components {
+  /* Gradiente turquesa → menta, o recorrente da marca. */
+  .gradiente-marca {
+    @apply bg-gradient-to-br from-petroleo via-[#2a8a88] to-menta;
+  }
+
+  .texto-gradiente {
+    @apply bg-gradient-to-r from-petroleo to-[#3d9d90] bg-clip-text text-transparent;
+  }
+
+  /* Estado inicial do conteúdo que entra ao rolar.
+     O componente Revelar troca para .revelado quando a seção aparece. */
+  .revelar {
+    opacity: 0;
+    transform: translateY(14px);
+    transition:
+      opacity 0.85s var(--ease-suave),
+      transform 0.85s var(--ease-suave);
+    transition-delay: var(--atraso, 0ms);
+    will-change: opacity, transform;
+  }
+
+  .revelar.revelado {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .revelar {
+    opacity: 1;
+    transform: none;
+  }
+}

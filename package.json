@@ -1,0 +1,28 @@
+{
+  "name": "naki-site",
+  "description": "Site institucional da Nakí, marca premium de limpeza, higiene e conservação. Next.js estático, catálogo de produtos com certificação Kosher, vegana e biodegradável, e captação de distribuidores e varejo via WhatsApp.",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "lucide-react": "^1.30.0",
+    "next": "^16.2.4",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.2.4",
+    "@types/node": "^25.6.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "postcss": "^8.5.10",
+    "sharp": "^0.35.3",
+    "tailwindcss": "^4.2.4",
+    "typescript": "~6.0.2"
+  }
+}
