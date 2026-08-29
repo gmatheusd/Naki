@@ -152,12 +152,37 @@ export function SiteFooter() {
           <p>
             {year} © {SITE_NAME}. Todos os direitos reservados.
           </p>
-          <Link
-            href="/politica-de-privacidade/"
-            className="transition-colors hover:text-white"
-          >
-            Política de Privacidade
-          </Link>
+
+          <div className="flex flex-col items-center gap-3 sm:flex-row sm:gap-4">
+            <Link
+              href="/politica-de-privacidade/"
+              className="transition-colors hover:text-white"
+            >
+              Política de Privacidade
+            </Link>
+
+            <span className="hidden sm:inline" aria-hidden>
+              ·
+            </span>
+
+            {/* Crédito da agência, mesmo padrão dos outros sites da Axcali. */}
+            <a
+              href="https://axcalidigital.com.br/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 transition-colors hover:text-white"
+            >
+              <span>Site criado e otimizado por</span>
+              <Image
+                src="/images/logo-axcali-digital.png"
+                alt="Axcali Digital"
+                width={512}
+                height={452}
+                className="h-4 w-auto"
+              />
+              <span className="font-semibold text-white">Axcali Digital</span>
+            </a>
+          </div>
         </div>
       </div>
     </footer>
