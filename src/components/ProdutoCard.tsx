@@ -14,7 +14,7 @@ export function ProdutoCard({ produto: p, atraso = 0 }: ProdutoCardProps) {
     <RevelarLink
       href={`/produtos/${p.slug}/`}
       atraso={atraso}
-      className="group flex flex-col overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-sm transition-all hover:-translate-y-1 hover:border-menta hover:shadow-2xl"
+      className="group flex flex-col overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-sm transition-all hover:-translate-y-0.5 hover:border-menta hover:shadow-xl"
     >
       <div className="relative flex h-72 items-center justify-center bg-gradient-to-b from-offwhite to-menta/25 p-8">
         <Image
@@ -23,7 +23,7 @@ export function ProdutoCard({ produto: p, atraso = 0 }: ProdutoCardProps) {
           width={p.largura}
           height={p.altura}
           sizes="(max-width: 768px) 60vw, 300px"
-          className="h-full w-auto object-contain drop-shadow-xl transition-transform duration-700 group-hover:scale-105"
+          className="h-full w-auto object-contain drop-shadow-xl transition-transform duration-700 group-hover:scale-[1.02]"
         />
         <span className="absolute top-5 right-5 rounded-full bg-petroleo px-4 py-1.5 text-xs font-bold text-white">
           {p.volume}

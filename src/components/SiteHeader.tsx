@@ -56,7 +56,7 @@ export function SiteHeader() {
                 width={1085}
                 height={416}
                 priority
-                className="h-9 w-auto transition-transform group-hover:scale-105 md:h-11"
+                className="h-9 w-auto transition-transform group-hover:scale-[1.02] md:h-11"
               />
             </Link>
 
@@ -112,7 +112,7 @@ export function SiteHeader() {
               </Link>
               <Link
                 href="/seja-um-distribuidor/"
-                className="flex items-center gap-2 rounded-full bg-petroleo px-6 py-3 text-sm font-bold text-white shadow-lg transition-all hover:-translate-y-0.5 hover:bg-petroleo-escuro"
+                className="flex items-center gap-2 rounded-full bg-petroleo px-6 py-3 text-sm font-bold text-white shadow-lg transition-all hover:-translate-y-px hover:bg-petroleo-escuro"
               >
                 Seja um distribuidor
                 <ArrowRight className="h-4 w-4" aria-hidden />

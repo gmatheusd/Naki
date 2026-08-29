@@ -97,7 +97,7 @@ export default function Home() {
               >
                 <Link
                   href="/produtos/"
-                  className="group flex items-center justify-center gap-3 rounded-2xl bg-white px-8 py-4 font-bold text-petroleo shadow-xl transition-all hover:-translate-y-0.5 hover:bg-areia"
+                  className="group flex items-center justify-center gap-3 rounded-2xl bg-white px-8 py-4 font-bold text-petroleo shadow-xl transition-all hover:-translate-y-px hover:bg-areia"
                 >
                   Conhecer a linha
                   <ArrowRight
@@ -109,7 +109,7 @@ export default function Home() {
                   href={WA.hero}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-3 rounded-2xl border border-white/40 px-8 py-4 font-bold text-white backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:border-white hover:bg-white/10"
+                  className="flex items-center justify-center gap-3 rounded-2xl border border-white/40 px-8 py-4 font-bold text-white backdrop-blur-sm transition-all hover:-translate-y-px hover:border-white hover:bg-white/10"
                 >
                   Falar com o comercial
                 </a>
@@ -246,7 +246,7 @@ export default function Home() {
                   <Revelar
                     key={c.titulo}
                     atraso={i * 100}
-                    className="rounded-3xl border border-slate-100 bg-white p-8 shadow-sm transition-all hover:-translate-y-1 hover:border-menta hover:shadow-xl"
+                    className="rounded-3xl border border-slate-100 bg-white p-8 shadow-sm transition-all hover:-translate-y-0.5 hover:border-menta hover:shadow-xl"
                   >
                     <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-petroleo">
                       <Icone className="h-6 w-6 text-menta" aria-hidden />

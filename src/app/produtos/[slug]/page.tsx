@@ -139,7 +139,7 @@ export default async function ProdutoPage({ params }: Props) {
                 href={WA[produto.waLink]}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-8 inline-flex items-center gap-2 rounded-2xl bg-petroleo px-8 py-4 font-bold text-white shadow-lg transition-all hover:-translate-y-0.5 hover:bg-petroleo-escuro"
+                className="mt-8 inline-flex items-center gap-2 rounded-2xl bg-petroleo px-8 py-4 font-bold text-white shadow-lg transition-all hover:-translate-y-px hover:bg-petroleo-escuro"
               >
                 <MessageCircle className="h-5 w-5" aria-hidden />
                 Pedir condições deste produto

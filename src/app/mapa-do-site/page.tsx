@@ -128,7 +128,7 @@ export default function MapaDoSitePage() {
                           </span>
                         </span>
                         <ArrowUpRight
-                          className="mt-1 h-4 w-4 shrink-0 text-menta transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                          className="mt-1 h-4 w-4 shrink-0 text-menta transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-px"
                           aria-hidden
                         />
                       </Link>

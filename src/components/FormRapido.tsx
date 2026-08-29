@@ -87,7 +87,7 @@ export function FormRapido({ variante = 'geral', rotuloBotao }: FormRapidoProps)
 
         <button
           type="submit"
-          className="group flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-petroleo px-7 py-3 font-bold whitespace-nowrap text-white shadow-lg transition-all hover:-translate-y-0.5 hover:bg-petroleo-escuro"
+          className="group flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-petroleo px-7 py-3 font-bold whitespace-nowrap text-white shadow-lg transition-all hover:-translate-y-px hover:bg-petroleo-escuro"
         >
           {rotuloBotao ?? 'Enviar'}
           <ArrowRight

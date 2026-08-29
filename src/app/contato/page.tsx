@@ -59,7 +59,7 @@ export default function ContatoPage() {
                   href={WA.contato}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-start gap-4 rounded-2xl border border-slate-100 bg-white p-6 shadow-sm transition-all hover:-translate-y-0.5 hover:border-menta hover:shadow-lg"
+                  className="flex items-start gap-4 rounded-2xl border border-slate-100 bg-white p-6 shadow-sm transition-all hover:-translate-y-px hover:border-menta hover:shadow-lg"
                 >
                   <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#25D366]">
                     <MessageCircle className="h-5 w-5 text-white" aria-hidden />
@@ -77,7 +77,7 @@ export default function ContatoPage() {
 
                 <a
                   href={CONTACT.emailHref}
-                  className="flex items-start gap-4 rounded-2xl border border-slate-100 bg-white p-6 shadow-sm transition-all hover:-translate-y-0.5 hover:border-menta hover:shadow-lg"
+                  className="flex items-start gap-4 rounded-2xl border border-slate-100 bg-white p-6 shadow-sm transition-all hover:-translate-y-px hover:border-menta hover:shadow-lg"
                 >
                   <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-areia">
                     <Mail className="h-5 w-5 text-petroleo" aria-hidden />

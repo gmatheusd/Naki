@@ -163,7 +163,7 @@ export default function ProdutosPage() {
               href={WA.mercado}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-2xl bg-white px-8 py-4 font-bold text-petroleo transition-all hover:-translate-y-0.5 hover:bg-areia"
+              className="inline-flex items-center gap-2 rounded-2xl bg-white px-8 py-4 font-bold text-petroleo transition-all hover:-translate-y-px hover:bg-areia"
             >
               <MessageCircle className="h-5 w-5" aria-hidden />
               Falar com o comercial

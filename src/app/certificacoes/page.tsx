@@ -112,7 +112,7 @@ export default function CertificacoesPage() {
                   href={WA.kosher}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-2xl bg-petroleo px-8 py-4 font-bold text-white transition-all hover:-translate-y-0.5 hover:bg-petroleo-escuro"
+                  className="inline-flex items-center justify-center gap-2 rounded-2xl bg-petroleo px-8 py-4 font-bold text-white transition-all hover:-translate-y-px hover:bg-petroleo-escuro"
                 >
                   Falar sobre a certificação
                   <ArrowRight className="h-5 w-5" aria-hidden />
@@ -191,7 +191,7 @@ export default function CertificacoesPage() {
                   <Revelar
                     key={c.slug}
                     atraso={i * 90}
-                    className="flex flex-col rounded-3xl border border-slate-100 bg-white p-8 shadow-sm transition-all hover:-translate-y-1 hover:border-menta hover:shadow-xl"
+                    className="flex flex-col rounded-3xl border border-slate-100 bg-white p-8 shadow-sm transition-all hover:-translate-y-0.5 hover:border-menta hover:shadow-xl"
                   >
                     <div className="flex items-center justify-between gap-4">
                       <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-areia">

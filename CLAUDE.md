@@ -362,3 +362,16 @@ da mensagem em vez de virar linha pendurada), `abrirWhatsApp` e as classes de ca
 `siteConfig.ts`.
 
 `CtaForm` é usado nas 7 páginas que antes tinham `CtaSection`, que foi removido do projeto.
+
+### Intensidade dos hovers (ajustada em 29/08/2026)
+Os hovers estavam expressivos demais. Escala aplicada em todo o site:
+
+| Elemento | Antes | Agora |
+|---|---|---|
+| Cards (produto, canais, valor, certificação, próximos passos) | `-translate-y-1` (4px) | `-translate-y-0.5` (2px) |
+| Botões e links de ação | `-translate-y-0.5` (2px) | `-translate-y-px` (1px) |
+| Imagens em escala (packshot no card, logo do header, bolha do WhatsApp) | `scale-105` (5%) | `scale-[1.02]` (2%) |
+| Card de produto | `hover:shadow-2xl` | `hover:shadow-xl` |
+
+A duração continua nos 400 ms com `--ease-suave` definidos em `globals.css`: o problema era a
+amplitude do deslocamento, não o tempo da transição.

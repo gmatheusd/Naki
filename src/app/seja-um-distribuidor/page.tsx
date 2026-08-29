@@ -125,7 +125,7 @@ export default function DistribuidorPage() {
                   <Revelar
                     key={v.titulo}
                     atraso={i * 100}
-                    className="rounded-3xl border border-slate-100 bg-white p-8 shadow-sm transition-all hover:-translate-y-1 hover:border-menta hover:shadow-xl"
+                    className="rounded-3xl border border-slate-100 bg-white p-8 shadow-sm transition-all hover:-translate-y-0.5 hover:border-menta hover:shadow-xl"
                   >
                     <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-petroleo">
                       <Icone className="h-6 w-6 text-menta" aria-hidden />
@@ -217,7 +217,7 @@ export default function DistribuidorPage() {
                 href={WA.distribuidor}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-8 inline-flex items-center gap-3 rounded-2xl bg-[#25D366] px-7 py-4 font-bold text-white shadow-lg transition-all hover:-translate-y-0.5"
+                className="mt-8 inline-flex items-center gap-3 rounded-2xl bg-[#25D366] px-7 py-4 font-bold text-white shadow-lg transition-all hover:-translate-y-px"
               >
                 <MessageCircle className="h-5 w-5" aria-hidden />
                 {CONTACT.phone}

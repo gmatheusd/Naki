@@ -239,7 +239,7 @@ export default function SobrePage() {
                 <Revelar key={p.href} atraso={i * 90}>
                   <Link
                     href={p.href}
-                    className="group flex h-full flex-col rounded-3xl bg-white p-8 shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl"
+                    className="group flex h-full flex-col rounded-3xl bg-white p-8 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-xl"
                   >
                     <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-petroleo">
                       <p.icon className="h-5 w-5 text-menta" aria-hidden />
