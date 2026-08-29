@@ -375,3 +375,18 @@ Os hovers estavam expressivos demais. Escala aplicada em todo o site:
 
 A duração continua nos 400 ms com `--ease-suave` definidos em `globals.css`: o problema era a
 amplitude do deslocamento, não o tempo da transição.
+
+### FAQ: área clicável (corrigida em 29/08/2026)
+O `p-6` estava no `<details>`, mas quem recebe o clique é o `<summary>`. Resultado: uma faixa de
+24 px em volta da pergunta mostrava cursor de ponteiro e não abria nada, e o alvo real cobria só
+~28% do card.
+
+O espaçamento passou para o `<summary>`, que virou `flex` ocupando a linha inteira. O alvo agora
+cobre **97%** do card (o resto é a borda de 1 px) e tem 96 px de altura no mobile, bem acima dos
+44 px recomendados para toque. A resposta ganhou `px-6 pb-6` próprios.
+
+Também no summary: `select-none` (duplo clique selecionava o texto em vez de abrir),
+`focus-visible` com contorno para navegação por teclado, e `[&::-webkit-details-marker]:hidden`
+além do `marker:content-none` — o Safari ignora o segundo e mostraria o triângulo nativo.
+O `+` é um caractere simples em menta, sem círculo, que rotaciona 45° para virar `×` quando
+aberto: a versão com círculo ficou pesada demais ao lado da pergunta.
